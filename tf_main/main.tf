@@ -46,3 +46,28 @@ module "awsome_key_pair" {
   name = "awsome_key"
   public_key_path = "/home/rajiv/.ssh/id_rsa.pub"
 }
+
+module "awsome_iam_role" {
+  source = "../tf_iam_role"
+}
+
+module "awsome_public_instance" {
+  source         = "../tf_ec2"
+  subnet_id      = "${module.awsome_vpc_private_sn.id}"
+  ami_id         = "ami-02ace471"
+  name           = "awsome_public"
+  key_pair_id    = "${module.awsome_key_pair.id}"
+  zone_id        = "${module.awsome_vpc.zone_id}"
+  iam_instance_profile = "${module.awsome_iam_role.name}"
+}
+
+
+module "awsome_private_autoscale" {
+  source = "../tf_private_ec2_autoscale"
+  name   = "awsome-private"
+
+  availability_zones = "ap-southeast-1a,ap-southeast-1b"
+  subnets            = ["${module.awsome_vpc_private_sn.id}"]
+  aws_region         = "ap-southeast-1"
+  key_pair_id        = "${module.awsome_key_pair.id}"
+}
