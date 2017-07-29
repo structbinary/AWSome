@@ -1,5 +1,5 @@
 variable "name" {
-  default     = "sandy-vpc"
+  default     = "awsome"
   description = "Name tag for the VPC to be created"
 }
 
