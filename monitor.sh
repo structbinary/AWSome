@@ -1,8 +1,8 @@
 #!/bin/bash
 foldername=$(date +%Y-%m-%d-%H:%M:%S)
 host=$(hostname)
-mkdir /home/ubuntu/logs/$foldername
-cd /home/ubuntu/logs/
+mkdir /home/ubuntu/$foldername
+cd /home/ubuntu/
 cd $foldername
 free >> free.log
 df >> df.log
