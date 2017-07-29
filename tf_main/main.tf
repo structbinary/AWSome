@@ -1,6 +1,6 @@
 provider "aws" {
-  access_key = "xxxxxxxxxxxx"
-  secret_key = "xxxxxxxxxxxxxxxxxxxx"
+  access_key = "xxxxxxxxxxxxx"
+  secret_key = "xxxxxxxxxxxxxxxxxxx"
   region     = "ap-southeast-1"
 }
 
@@ -35,3 +35,14 @@ module "awsome_vpc_private_sn" {
   pvt_route_table_id = "${module.awsome_private_route_table.route_table_id}"
 }
 
+module "awsome_web_sg" {
+  source = "../tf_web_sg"
+  vpc_id = "${module.awsome_vpc.id}"
+  allowed_cidr = "0.0.0.0/0"
+}
+
+module "awsome_key_pair" {
+  source = "../tf_key_pair"
+  name = "awsome_key"
+  public_key_path = "/home/rajiv/.ssh/id_rsa.pub"
+}
